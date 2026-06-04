@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Мистер Теросер | Frontend-разработчик</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #cfe9ff;
+            background: linear-gradient(145deg, #d4efff 0%, #c0e2fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255,255,240,0.2) 2%, transparent 2.5%),
+                              radial-gradient(circle at 85% 70%, rgba(255,250,210,0.15) 1.8%, transparent 2%);
+            background-size: 55px 55px, 70px 70px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .profile-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 3rem;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 30, 60, 0.25), 0 8px 18px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 2;
+            border: 1px solid rgba(255,255,245,0.6);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 32px 55px -16px rgba(0, 40, 70, 0.3);
+        }
+
+        .card-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .info-side {
+            flex: 2;
+            min-width: 260px;
+            padding: 2rem 1.8rem 2rem 2rem;
+        }
+
+        .rem-side {
+            flex: 1.3;
+            background: linear-gradient(135deg, #fff6f0 0%, #fffaf5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.8rem;
+            border-left: 1px solid rgba(180, 210, 240, 0.6);
+            position: relative;
+        }
+
+        .rem-illustration {
+            text-align: center;
+            width: 100%;
+        }
+
+        .rem-illustration img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 12px 18px rgba(0,0,0,0.1));
+            border-radius: 2rem;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        .greeting {
+            display: inline-block;
+            background: rgba(100, 150, 220, 0.15);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c6280;
+            margin-bottom: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #1c3f5c, #2a5b7a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            background: #eef4ff;
+            font-size: 1rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 80px;
+            font-weight: 500;
+            color: #1f6392;
+        }
+
+        .info-grid {
+            margin-top: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.08rem;
+            border-bottom: 1px solid rgba(150, 180, 210, 0.3);
+            padding-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .info-icon {
+            width: 32px;
+            text-align: center;
+            color: #3f7e9e;
+            font-size: 1.3rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #1e4a6e;
+            min-width: 100px;
+        }
+
+        .info-value {
+            color: #1a2f3f;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .highlight {
+            background: #e9f3ff;
+            border-radius: 24px;
+            padding: 0.2rem 0.7rem;
+            font-weight: 600;
+            color: #005f8c;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: white;
+            border-radius: 60px;
+            padding: 0.6rem 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            color: #1f5a7c;
+            text-decoration: none;
+            border: 1px solid #cbe0f0;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        .social-btn:hover {
+            background: #e7f2ff;
+            border-color: #93b9dc;
+            transform: translateY(-2px);
+            color: #0a4564;
+        }
+
+        .rem-caption {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #6c8eaa;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 780px) {
+            .card-inner {
+                flex-direction: column;
+            }
+            .rem-side {
+                border-left: none;
+                border-top: 1px solid rgba(150, 180, 210, 0.5);
+                padding: 1.5rem;
+            }
+            .info-side {
+                padding: 1.8rem;
+            }
+            h1 {
+                font-size: 1.9rem;
+            }
+            .info-row {
+                gap: 0.7rem;
+            }
+            .info-label {
+                min-width: 85px;
+                font-size: 0.95rem;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #d4e6f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7fa6c2;
+            border-radius: 6px;
+        }
+
+        .copy-tip {
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 0.75rem;
+            background: #d9e9ff;
+            padding: 2px 8px;
+            border-radius: 30px;
+            transition: 0.1s;
+            display: inline-block;
+        }
+        .copy-tip:hover {
+            background: #c0dcfc;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3a4d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-card">
+    <div class="card-inner">
+        <div class="info-side">
+            <div class="greeting">
+                <i class="fas fa-code"></i>  портфолио-визитка
+            </div>
+            <h1>
+                misterTer0ser 
+                <span class="badge"><i class="fas fa-user-astronaut"></i> dev</span>
+            </h1>
+            <p style="color: #3c6e8c; margin-top: 8px; margin-bottom: 8px;">Frontend · создаю интерфейсы с душой</p>
+            
+            <div class="info-grid">
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-user-circle"></i></div>
+                    <div class="info-label">🧑 Имя</div>
+                    <div class="info-value"><strong>Мистер Теросер</strong> (misterTer0ser)</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <div class="info-label">🎂 Возраст</div>
+                    <div class="info-value">15 лет</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-label">📍 Город</div>
+                    <div class="info-value">Нефтекамск</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="info-label">💼 Работа</div>
+                    <div class="info-value"><span class="highlight">Frontend-Разработчик</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fab fa-js"></i></div>
+                    <div class="info-label">💻 Осн. язык</div>
+                    <div class="info-value">JavaScript <span style="font-size:0.85rem; color:#4682b4;">(3 года опыта)</span></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="info-label">🎓 Образование</div>
+                    <div class="info-value">Основное Общее Образование</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fas fa-heart"></i></div>
+                    <div class="info-label">❤️ Интересы</div>
+                    <div class="info-value">Код, игры, музыка</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fab fa-telegram-plane"></i></div>
+                    <div class="info-label">📱 TG</div>
+                    <div class="info-value">
+                        <a href="https://t.me/misterteroser" target="_blank" style="text-decoration: none; color: #1f6392; font-weight: 600;">@misterteroser</a>
+                        <span class="copy-tip" onclick="copyToClipboard('@misterteroser')"><i class="far fa-copy"></i> копировать</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><i class="fab fa-telegram"></i></div>
+                    <div class="info-label">📢 Канал</div>
+                    <div class="info-value">
+                        <a href="https://t.me/misterTer0ser" target="_blank" style="text-decoration: none; color: #1f6392; font-weight: 500;">@misterTer0ser</a>
+                        <span class="copy-tip" onclick="copyToClipboard('@misterTer0ser')"><i class="far fa-copy"></i> копировать</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://t.me/misterteroser" target="_blank" class="social-btn"><i class="fab fa-telegram"></i> Личный TG</a>
+                <a href="https://t.me/misterTer0ser" target="_blank" class="social-btn"><i class="fab fa-telegram"></i> Канал</a>
+                <a href="https://github.com/misterTer0ser" class="social-btn" style="background:#f0f7fe;"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+            <div style="margin-top: 1.2rem; font-size: 0.7rem; color: #5788a8; border-top: 1px dashed #c6def5; padding-top: 1rem;">
+                <i class="fas fa-laptop-code"></i>  JS 3 года | создаю веб-приложения с 12 лет
+            </div>
+        </div>
+        
+        <div class="rem-side">
+            <div class="rem-illustration">
+                <img src="https://i.pinimg.com/originals/6f/49/30/6f49301e05c7a43ba5d78d581d24c45e.png" 
+                     alt="Рем из Re:Zero"
+                     onerror="this.onerror=null; this.src='https://cdn.discordapp.com/attachments/881019701874913312/rem-placeholder.png'; this.alt='Рем арт';"
+                     style="max-width: 280px; width: 100%; border-radius: 28px;">
+                <div class="rem-caption">
+                    <i class="fas fa-star-of-life"></i> Рем (Re:Zero) — символ верности и силы <i class="fas fa-heart" style="color:#e66767;"></i>
+                </div>
+                <div style="font-size: 0.7rem; margin-top: 12px; background: #fff0e0; border-radius: 60px; padding: 4px 12px; display: inline-block; color: #a5673f;">
+                    «Я хочу быть полезной для Субару-куна... и для всех, кто верит в меня»
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="toastMessage" class="toast-msg">✓ Скопировано!</div>
+
+<script>
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Скопировано: ${text}`);
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+    
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast(`Скопировано: ${text}`);
+    }
+    
+    function showToast(msg) {
+        const toast = document.getElementById('toastMessage');
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, 1800);
+    }
+    
+    window.addEventListener('load', function() {
+        const remImg = document.querySelector('.rem-illustration img');
+        if (remImg && remImg.naturalWidth === 0) {
+            remImg.src = 'https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/08/rem-title.jpeg?w=1600&h=1200&fit=crop';
+        }
+    });
+</script>
+</body>
+</html>
